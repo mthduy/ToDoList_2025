@@ -13,23 +13,27 @@ import { cn } from '@/lib/utils'
 
 const TaskListPagination = ({handleNext, handlePrev, handlePageChange, page, totalPages}) => {
 
-  const generatePages = () => {
-    const pages = [];
-    if (totalPages <= 4) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (page <= 2) {
-        pages.push(1, 2, 3, '...', totalPages);
-      } else if (page >= totalPages - 1) {
-        pages.push(1, '...', totalPages - 2, totalPages - 1, totalPages);
-      } else {
-        pages.push(1, '...', page, '...', totalPages);
-      }
+  const generatePages =() =>{
+    const pages=[]; 
+    if(totalPages <4){
+      for(let i=1; i<= totalPages; i++){
+        pages.push(i); 
     }
+  }
+    else
+      {
+      if(page <2){
+        pages.push(1,2,3,'...', totalPages)
+      } else if(page >= totalPages -1){
+        pages.push(1,'...', totalPages -2, totalPages -1, totalPages)
+      } else {
+        pages.push(1,'...', page ,'...', totalPages)
+
+    }
+   
+  }
     return pages;
-  };
+}
 
   const pagesToShow=generatePages();
 
@@ -50,27 +54,26 @@ const TaskListPagination = ({handleNext, handlePrev, handlePageChange, page, tot
 
 
 
-        {pagesToShow.map((p, idx) => {
-          if (p === '...') {
-            return (
-              <PaginationItem key={"ellipsis-" + idx}>
-                <PaginationEllipsis />
-              </PaginationItem>
-            );
-          } else {
-            return (
-              <PaginationItem key={p}>
+        {pagesToShow.map((p, index) => (
+            <PaginationItem key={index}>
+              {p==='...'? (<PaginationEllipsis/>) : (
                 <PaginationLink
-                  isActive={p === page}
-                  onClick={() => p !== page && handlePageChange(p)}
-                  className={cn("cursor-pointer", p === page && "bg-primary text-white")}
-                >
-                  {p}
+                isActive={p===page}
+                onClick={()=>{
+                if(p!==page)
+                handlePageChange(p)}
+                } 
+                className="cursor-pointer">
+                {p}
+                
+
                 </PaginationLink>
-              </PaginationItem>
-            );
-          }
-        })}
+              )}
+  
+            </PaginationItem>
+            )
+          )
+}
 
         <PaginationItem>
           <PaginationNext 
